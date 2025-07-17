@@ -68,11 +68,9 @@ export class DocumentsController {
           description: 'Document status',
         },
         tags: {
-          type: 'array',
-          items: {
-            type: 'string',
-          },
-          description: 'Document tags',
+          type: 'string',
+          description: 'Document tags (will be converted to array automatically)',
+          example: 'tag1',
         },
       },
       required: ['file', 'title'],

@@ -1,0 +1,9 @@
+{
+  "title": "Test JSON Document",
+  "description": "Sample JSON file for document testing",
+  "data": {
+    "test": true,
+    "timestamp": "2025-07-17T18:16:49.000Z",
+    "features": ["upload", "validation", "storage"]
+  }
+}
