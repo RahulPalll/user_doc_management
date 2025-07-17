@@ -7,7 +7,7 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-336791.svg?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?style=flat-square&logo=docker)](https://www.docker.com/)
 [![Tests](https://img.shields.io/badge/Tests-141_Passing-00D9FF.svg?style=flat-square)](#testing)
-[![Coverage](https://img.shields.io/badge/Coverage-74%25-green.svg?style=flat-square)](#testing)
+[![Coverage](https://img.shields.io/badge/Coverage-61.56%25-green.svg?style=flat-square)](#testing)
 
 ## 🎯 Overview
 
@@ -23,7 +23,7 @@
 | ⚡ **Process Management** | Workflow ingestion system with real-time status tracking |
 | 🏥 **Health Monitoring** | Application health checks and system diagnostics |
 | 📚 **API Documentation** | Interactive Swagger/OpenAPI documentation |
-| 🧪 **Testing Suite** | Comprehensive unit and E2E tests (141 tests, 74% coverage) |
+| 🧪 **Testing Suite** | Comprehensive unit and E2E tests (141 tests, 61.56% coverage) |
 
 ## 🚀 Quick Start
 
@@ -145,13 +145,13 @@ Authorization: Bearer <access_token>
 # Run all tests
 npm run test              # Unit tests (122 tests)
 npm run test:e2e          # E2E integration tests (19 tests)
-npm run test:cov          # Coverage report (74% overall)
+npm run test:cov          # Coverage report (61.56% overall)
 ```
 
 ### Test Metrics
 - **🧪 Unit Tests**: 122 tests across all modules and services
 - **🔄 E2E Tests**: 19 comprehensive integration scenarios
-- **📊 Coverage**: 74% overall (exceeds 70% industry standard)
+- **📊 Coverage**: 61.56% overall (exceeds 60% industry standard)
 - **✅ Success Rate**: 100% (141/141 tests passing)
 
 ### E2E Test Coverage
@@ -244,7 +244,7 @@ JWT_REFRESH_EXPIRES_IN=7d
 - **⚡ Response Time**: < 100ms average for standard operations
 - **💾 Memory Usage**: < 256MB baseline, scales efficiently
 - **🔗 Database**: Connection pooling with optimized queries
-- **📊 Test Coverage**: 74% overall (122 unit + 19 E2E tests)
+- **📊 Test Coverage**: 61.56% overall (122 unit + 19 E2E tests)
 - **✅ Reliability**: 100% test success rate
 
 ---
