@@ -65,7 +65,7 @@ export class DataValidator {
         .getRawMany();
 
       const roleDistribution: Record<string, number> = {};
-      roleStats.forEach(stat => {
+      roleStats.forEach((stat) => {
         roleDistribution[stat.role] = parseInt(stat.count);
       });
 
@@ -91,7 +91,9 @@ export class DataValidator {
           .where('process.initiated_by_id IS NULL')
           .getCount();
         if (processesWithoutInitiator > 0) {
-          errors.push(`${processesWithoutInitiator} ingestion processes without initiator`);
+          errors.push(
+            `${processesWithoutInitiator} ingestion processes without initiator`,
+          );
         }
       }
 
@@ -101,7 +103,6 @@ export class DataValidator {
         roleDistribution,
         errors,
       };
-
     } catch (error) {
       errors.push(`Validation failed: ${error.message}`);
       return {
@@ -119,19 +120,21 @@ export class DataValidator {
   printResults(result: ValidationResult): void {
     console.log('\n🔍 DATA VALIDATION RESULTS');
     console.log('==========================');
-    
+
     if (result.isValid) {
       console.log('✅ Data validation PASSED');
     } else {
       console.log('❌ Data validation FAILED');
       console.log('\nErrors:');
-      result.errors.forEach(error => console.log(`   - ${error}`));
+      result.errors.forEach((error) => console.log(`   - ${error}`));
     }
 
     console.log('\n📊 Data Statistics:');
     console.log(`   👥 Users: ${result.stats.users}`);
     console.log(`   📄 Documents: ${result.stats.documents}`);
-    console.log(`   ⚙️ Ingestion Processes: ${result.stats.ingestionProcesses}`);
+    console.log(
+      `   ⚙️ Ingestion Processes: ${result.stats.ingestionProcesses}`,
+    );
     console.log(`   📊 Total Records: ${result.stats.totalRecords}`);
 
     if (Object.keys(result.roleDistribution).length > 0) {
@@ -155,7 +158,7 @@ async function runValidation() {
     const validator = new DataValidator(dataSource);
     const result = await validator.validateData();
     validator.printResults(result);
-    
+
     if (!result.isValid) {
       process.exit(1);
     }

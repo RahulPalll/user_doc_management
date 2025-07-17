@@ -1,362 +1,252 @@
 # NestJS User & Document Management System
 
-> **Enterprise-grade NestJS backend for user and document management with role-based authentication**
+> **Enterprise-grade backend for user and document management with role-based authentication**
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
-[![NestJS](https://img.shields.io/badge/NestJS-11.0+-red.svg)](https://nestjs.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue.svg)](https://www.postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
-[![Tests](https://img.shields.io/badge/Tests-217_Passing-green.svg)](#testing)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6.svg?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-11.0+-E0234E.svg?style=flat-square&logo=nestjs)](https://nestjs.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-336791.svg?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?style=flat-square&logo=docker)](https://www.docker.com/)
+[![Tests](https://img.shields.io/badge/Tests-141_Passing-00D9FF.svg?style=flat-square)](#testing)
+[![Coverage](https://img.shields.io/badge/Coverage-74%25-green.svg?style=flat-square)](#testing)
 
 ## 🎯 Overview
 
-A **production-ready NestJS backend system** showcasing modern development practices and enterprise-level architecture for user and document management.
+**Production-ready NestJS backend** showcasing modern development practices and enterprise architecture patterns for scalable user and document management systems.
 
-### ✨ Key Features
+### ✨ Core Features
 
-- **🔐 JWT Authentication** - Secure authentication with access & refresh tokens
-- **👥 User Management** - Complete CRUD with role-based access control (Admin, Editor, Viewer)
-- **📄 Document Management** - File upload, storage, metadata handling, and secure download
-- **⚡ Ingestion System** - Process management and workflow tracking
-- **🏥 Health Monitoring** - Application health checks and system status
-- **📚 API Documentation** - Interactive Swagger documentation
-- **🧪 Comprehensive Testing** - Unit and E2E tests with high coverage
-
-## 🏛️ System Architecture
-
-### Domain Structure
-```
-src/
-├── 🔐 auth/                # Authentication & authorization
-├── 👥 users/               # User management & profiles
-├── 📄 documents/           # Document operations & file handling
-├── ⚡ ingestion/           # Process management & workflows
-├── 🏥 health/              # System health & monitoring
-├── 📋 common/              # Shared utilities & components
-└── 🗄️ database/           # Entities, migrations & seeds
-```
-
-### Technology Stack
-
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Framework** | NestJS + TypeScript | Type-safe, scalable backend framework |
-| **Database** | PostgreSQL + TypeORM | Robust data persistence with ORM |
-| **Authentication** | JWT + Passport | Secure token-based authentication |
-| **Validation** | class-validator | Input validation and sanitization |
-| **Documentation** | Swagger/OpenAPI | Interactive API documentation |
-| **Testing** | Jest | Unit and integration testing |
-| **Containerization** | Docker + Docker Compose | Development and deployment |
+| Feature | Description |
+|---------|-------------|
+| 🔐 **Authentication** | JWT-based auth with refresh tokens & role-based access control |
+| 👥 **User Management** | Complete CRUD operations for users with Admin/Editor/Viewer roles |
+| 📄 **Document System** | File upload, storage, metadata handling, and secure retrieval |
+| ⚡ **Process Management** | Workflow ingestion system with real-time status tracking |
+| 🏥 **Health Monitoring** | Application health checks and system diagnostics |
+| 📚 **API Documentation** | Interactive Swagger/OpenAPI documentation |
+| 🧪 **Testing Suite** | Comprehensive unit and E2E tests (141 tests, 74% coverage) |
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
-- Docker & Docker Compose (for containerized setup)
-- PostgreSQL 15+ (for local development)
+- **Node.js** 18+ 
+- **PostgreSQL** 15+ (or Docker)
+- **Docker** (optional, for containerized setup)
 
 ### Option 1: Docker Setup (Recommended)
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd JKT_assignment
-
-# Start services with Docker Compose
+# Clone and start services
+git clone <repository-url> && cd JKT_assignment
 docker-compose up -d
 
-# The application will be available at:
-# API: http://localhost:3000
-# Swagger Docs: http://localhost:3000/api/docs
+# Verify setup
+curl http://localhost:3000/api/v1/health
 ```
 
 ### Option 2: Local Development
 ```bash
-# Install dependencies
+# Install and configure
 npm install
+cp .env.example .env  # Edit with your database credentials
 
-# Setup environment variables
-cp .env.example .env
-# Edit .env with your database credentials
-
-# Ensure PostgreSQL is running, then start the application
+# Start PostgreSQL and run application
 npm run start:dev
 
-# Seed the database (optional)
-npm run seed
+# Optional: Seed sample data
+npm run seed:medium
 ```
 
-### Verification
-Once the application is running, verify the setup:
-```bash
-# Health check
-curl http://localhost:3000/api/v1/health
+**Verification**: API available at `http://localhost:3000` | Docs at `http://localhost:3000/api/docs`
 
-# API documentation
-open http://localhost:3000/api/docs
+## 🏛️ Architecture
+
+### Project Structure
+```
+src/
+├── auth/          # JWT authentication & authorization strategies
+├── users/         # User management with role-based access control
+├── documents/     # File operations, upload/download, metadata
+├── ingestion/     # Process management & workflow tracking
+├── health/        # Application monitoring & health checks
+├── common/        # Shared utilities, guards, decorators, DTOs
+└── database/      # TypeORM entities, migrations, seeds
 ```
 
-## 📊 API Reference
+### Technology Stack
+```mermaid
+graph TB
+    A[Client] --> B[NestJS + TypeScript]
+    B --> C[JWT + Passport Auth]
+    B --> D[PostgreSQL + TypeORM]
+    B --> E[class-validator]
+    B --> F[Swagger/OpenAPI]
+    
+    style B fill:#E0234E
+    style D fill:#336791
+    style C fill:#000000
+```
 
-### Endpoint Overview
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| **Framework** | NestJS + TypeScript | Type-safe, scalable backend architecture |
+| **Database** | PostgreSQL + TypeORM | Robust persistence with ORM and migrations |
+| **Authentication** | JWT + Passport | Stateless authentication with refresh tokens |
+| **Validation** | class-validator + class-transformer | Request validation and data transformation |
+| **Documentation** | Swagger/OpenAPI | Auto-generated interactive API documentation |
+| **Testing** | Jest | Unit testing and E2E integration tests |
 
-| Module | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| **🔐 Auth** | `/api/v1/auth/*` | Authentication & authorization | Public |
-| **👥 Users** | `/api/v1/users/*` | User management & profiles | JWT Required |
-| **📄 Documents** | `/api/v1/documents/*` | File operations & metadata | JWT Required |
-| **⚡ Ingestion** | `/api/v1/ingestion/*` | Process management | JWT Required |
-| **🏥 Health** | `/api/v1/health/*` | System health monitoring | Public |
+## � API Reference
 
-### Authentication Workflow
-
+### Authentication Flow
 ```bash
-# 1. Register a new user
+# 1. Register user
 POST /api/v1/auth/register
-Content-Type: application/json
-
 {
   "username": "john_doe",
-  "email": "john@example.com",
+  "email": "john@example.com", 
   "password": "SecurePass123!",
   "firstName": "John",
   "lastName": "Doe"
 }
 
-# 2. Login to obtain JWT tokens
+# 2. Login and get tokens
 POST /api/v1/auth/login
-Content-Type: application/json
-
 {
   "usernameOrEmail": "john_doe",
   "password": "SecurePass123!"
 }
+# Returns: { access_token, refresh_token, user }
 
-# Response includes access_token and refresh_token
-{
-  "access_token": "eyJhbGciOiJIUzI1NiIs...",
-  "refresh_token": "eyJhbGciOiJIUzI1NiIs...",
-  "user": { ... }
-}
-
-# 3. Use access token for authenticated requests
+# 3. Use token for authenticated requests
 Authorization: Bearer <access_token>
 ```
+
+### Core Endpoints
+
+| Module | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| **Auth** | `POST /api/v1/auth/*` | Register, login, profile management | Public/JWT |
+| **Users** | `GET/POST/PATCH /api/v1/users/*` | User CRUD and statistics | JWT + Role |
+| **Documents** | `GET/POST/PATCH /api/v1/documents/*` | File operations and metadata | JWT |
+| **Ingestion** | `GET/POST /api/v1/ingestion/*` | Process management workflows | JWT |
+| **Health** | `GET /api/v1/health/*` | System health and diagnostics | Public |
 
 ### Role-Based Access Control
 
 | Role | Permissions |
 |------|-------------|
-| **Admin** | Full system access, user management, all operations |
-| **Editor** | Document management, limited user operations |
+| **Admin** | Full system access, user management, all CRUD operations |
+| **Editor** | Document management, limited user operations, own profile |
 | **Viewer** | Read-only access to documents and own profile |
 
 ## 🧪 Testing
 
-Comprehensive testing strategy with high coverage:
-
+### Test Strategy
 ```bash
 # Run all tests
-npm run test
-
-# Generate coverage report
-npm run test:cov
-
-# Run E2E tests
-npm run test:e2e
+npm run test              # Unit tests (122 tests)
+npm run test:e2e          # E2E integration tests (19 tests)
+npm run test:cov          # Coverage report (74% overall)
 ```
 
 ### Test Metrics
-- **217 test cases** across all modules
-- **73.55% overall coverage** (exceeds industry standards)
-- **Unit, Integration, and E2E tests**
+- **🧪 Unit Tests**: 122 tests across all modules and services
+- **🔄 E2E Tests**: 19 comprehensive integration scenarios
+- **📊 Coverage**: 74% overall (exceeds 70% industry standard)
+- **✅ Success Rate**: 100% (141/141 tests passing)
 
-## 📚 API Documentation
+### E2E Test Coverage
+- **Authentication**: Registration, login, token management
+- **User Operations**: CRUD, role validation, statistics
+- **Document Management**: Upload, retrieval, metadata operations
+- **Process Workflows**: Ingestion creation, status tracking
 
-Interactive API documentation available at: `http://localhost:3000/api/docs`
-
-### Core Endpoints
-
-| Module | Endpoint | Description |
-|--------|----------|-------------|
-| **Auth** | `/api/v1/auth/*` | Authentication & authorization |
-| **Users** | `/api/v1/users/*` | User management & profiles |
-| **Documents** | `/api/v1/documents/*` | File operations & metadata |
-| **Ingestion** | `/api/v1/ingestion/*` | Process management |
-| **Health** | `/api/v1/health/*` | System health monitoring |
-
-## 🏛️ Architecture & Design
-
-### System Architecture
-
-The application follows a layered architecture pattern:
-
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Controllers   │────│    Services     │────│   Repositories  │
-│   (API Layer)   │    │ (Business Logic)│    │   (Data Layer)  │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
-
-### Key Design Patterns
-
-- **Repository Pattern**: Clean data access abstraction
-- **Strategy Pattern**: Multiple authentication strategies (JWT, Local)
-- **Guard Pattern**: Request filtering and authorization
-- **DTO Pattern**: Data validation and transformation
-- **Decorator Pattern**: Custom authorization decorators
-
-### Security Features
-
-- **JWT Authentication**: Stateless token-based authentication
-- **Role-Based Access Control**: Admin, Editor, Viewer roles
-- **Password Security**: bcrypt hashing with salt rounds
-- **Input Validation**: Comprehensive request validation
-- **CORS Configuration**: Cross-origin request handling
+**Note**: E2E tests show expected TypeORM schema sync warnings during startup but all tests pass successfully.
 
 ## 🗄️ Database Design
 
-### Entity Relationships
+### Entity Schema
+```sql
+-- Core entities with relationships
+Users (id, username, email, role, profile_data)
+Documents (id, title, filename, metadata, created_by_id)
+IngestionProcesses (id, type, status, initiated_by_id)
 
-The system implements three core entities with well-defined relationships:
-
-```
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│    Users    │────│  Documents  │    │  Ingestion  │
-│             │    │             │    │  Processes  │
-├─────────────┤    ├─────────────┤    ├─────────────┤
-│ id (UUID)   │◄───┤ created_by  │    │ id (UUID)   │
-│ username    │    │ title       │    │ type        │
-│ email       │    │ filename    │    │ status      │
-│ role (enum) │    │ mimetype    │    │ initiated_by│◄──┐
-│ status      │    │ size        │    │ items_count │   │
-│ profile     │    │ metadata    │    │ created_at  │   │
-└─────────────┘    │ created_at  │    └─────────────┘   │
-                   └─────────────┘                      │
-                                                        │
-                   Connected via foreign key relationships
+-- Optimized with UUID primary keys and proper indexing
 ```
 
 ### Key Features
-
-- **UUID Primary Keys**: Distributed-system ready
-- **Enum Types**: Data consistency for roles and statuses
+- **UUID Primary Keys**: Distributed-system ready identifiers
+- **Enum Constraints**: Data consistency for roles and statuses
 - **JSON Metadata**: Flexible document properties
-- **Optimized Indexes**: Performance for common queries
-- **Referential Integrity**: Maintained across all relationships
+- **Foreign Key Relations**: Referential integrity across entities
+- **Optimized Indexes**: Performance for common query patterns
 
-## 📊 Test Data Generation
-
-The application includes a sophisticated seeding system for different testing scenarios:
+## 📚 Data Seeding
 
 ### Available Configurations
-
-| Configuration | Users | Documents | Processes | Use Case |
-|---------------|-------|-----------|-----------|----------|
-| **Basic** | 3 | 5 | 2 | Quick development |
-| **Medium** | 100 | 1,000 | 50 | Integration testing |
-| **Large** | 1,000 | 10,000 | 500 | Performance testing |
-
-### Usage
-
-```bash
-# Generate basic development data
-npm run seed:basic
-
-# Generate medium-scale testing data
-npm run seed:medium
-
-# Generate large-scale testing data
-npm run seed:large
-
-# Validate existing data integrity
-npm run validate:data
-```
+| Scale | Users | Documents | Processes | Use Case |
+|-------|-------|-----------|-----------|----------|
+| `npm run seed:basic` | 3 | ~10 | 2 | Quick development setup |
+| `npm run seed:medium` | 100 | ~1,000 | 50 | Integration testing |
+| `npm run seed:large` | 1,000 | ~10,000 | 500 | Performance testing |
 
 ### Features
-
-- **Realistic Data**: Proper names, emails, file types
-- **Batch Processing**: Optimized for performance (500-1000 records/batch)
-- **Progress Tracking**: Real-time progress indicators
+- **Realistic Data**: Proper names, emails, file types, metadata
+- **Batch Processing**: Optimized performance (500-1000 records/batch)
+- **Progress Tracking**: Real-time seeding progress with statistics
 - **Data Validation**: Integrity checks and relationship validation
 
-## 🔧 Development Scripts
+## 🔧 Available Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm run start` | Start application in production mode |
-| `npm run start:dev` | Start with hot reload for development |
-| `npm run start:debug` | Start in debug mode |
-| `npm run build` | Build application for production |
-| `npm run test` | Run unit tests |
-| `npm run test:e2e` | Run end-to-end tests |
-| `npm run test:cov` | Generate test coverage report |
-| `npm run lint` | Lint code with ESLint |
-| `npm run format` | Format code with Prettier |
-| `npm run seed` | Seed database with sample data (basic configuration) |
-| `npm run seed:basic` | Generate basic development data (3 users, ~10 documents) |
-| `npm run seed:medium` | Generate medium-scale testing data (100 users, ~1K documents) |
-| `npm run seed:large` | Generate large-scale testing data (1K users, ~10K documents) |
-| `npm run validate:data` | Validate existing database data integrity |
+| `npm run start:dev` | Development server with hot reload |
+| `npm run build` | Production build |
+| `npm run test` | Run unit test suite |
+| `npm run test:e2e` | Run E2E integration tests |
+| `npm run test:cov` | Generate coverage report |
+| `npm run lint` | Code linting with ESLint |
+| `npm run seed:medium` | Generate test data (recommended) |
 
 ## 🐳 Deployment
 
-### Docker Setup
-
+### Docker Production Setup
 ```bash
-# Start all services
+# Multi-stage optimized build
 docker-compose up -d
 
-# Check service status
-docker-compose ps
-
-# View logs
-docker-compose logs -f api
+# Health verification
+curl http://localhost:3000/api/v1/health
 ```
 
-### Production Ready
-
-- **Multi-stage Dockerfile**: Optimized image size
-- **Health Checks**: Built-in monitoring endpoints
-- **Security**: Non-root user, minimal attack surface
-- **CI/CD**: GitHub Actions workflow included
-
-## 🔧 Environment Configuration
-
+### Environment Variables
 ```env
+# Core Configuration
+NODE_ENV=production
+PORT=3000
+
 # Database
 DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=postgres
-DB_PASSWORD=password
+DB_PASSWORD=your_secure_password
 DB_NAME=user_document_management
 
-# JWT Configuration
-JWT_SECRET=your-super-secret-jwt-key-change-in-production
+# JWT Security
+JWT_SECRET=your-256-bit-secret-key
 JWT_EXPIRES_IN=24h
-JWT_REFRESH_SECRET=your-refresh-secret-key-change-in-production
+JWT_REFRESH_SECRET=your-refresh-secret-key
 JWT_REFRESH_EXPIRES_IN=7d
-
-# Application
-NODE_ENV=development
-PORT=3000
 ```
 
-## 📈 Performance & Monitoring
+## 📈 Performance Metrics
 
-### Health Endpoints
-
-- `/api/v1/health` - Basic health check
-- `/api/v1/health/detailed` - Database connectivity
-- `/api/v1/health/ready` - Readiness probe
-- `/api/v1/health/live` - Liveness probe
-
-### Metrics
-
-- **Response Time**: < 100ms average
-- **Memory Usage**: < 256MB baseline
-- **Database Connections**: Pooled and optimized
-- **Test Coverage**: 73.55% overall
+- **⚡ Response Time**: < 100ms average for standard operations
+- **💾 Memory Usage**: < 256MB baseline, scales efficiently
+- **🔗 Database**: Connection pooling with optimized queries
+- **📊 Test Coverage**: 74% overall (122 unit + 19 E2E tests)
+- **✅ Reliability**: 100% test success rate
 
 ---
 
-*Built with NestJS, TypeScript, and PostgreSQL for enterprise-grade performance and reliability.*
+**Built with NestJS, TypeScript, and PostgreSQL for enterprise-grade performance and scalability.**

@@ -3,7 +3,12 @@ import * as bcrypt from 'bcrypt';
 import { User } from '../entities/user.entity';
 import { Document } from '../entities/document.entity';
 import { IngestionProcess } from '../entities/ingestion-process.entity';
-import { UserRole, UserStatus, IngestionType, IngestionStatus } from '../../common/enums';
+import {
+  UserRole,
+  UserStatus,
+  IngestionType,
+  IngestionStatus,
+} from '../../common/enums';
 
 export interface SeedOptions {
   users: number;
@@ -25,7 +30,7 @@ export class DatabaseSeeder {
     try {
       // Clear existing data in correct order (handle foreign keys)
       await this.clearTables();
-      
+
       // Generate data
       await this.generateUsers(options.users);
       await this.generateDocuments(options.documents);
@@ -34,7 +39,7 @@ export class DatabaseSeeder {
       const endTime = Date.now();
       const duration = (endTime - startTime) / 1000;
       console.log(`✅ Database seeding completed in ${duration.toFixed(2)}s`);
-      
+
       // Show statistics
       await this.showStatistics();
     } catch (error) {
@@ -69,7 +74,7 @@ export class DatabaseSeeder {
     // Large dataset: generate with realistic distribution
     const roleDistribution = {
       [UserRole.ADMIN]: Math.max(1, Math.floor(count * 0.05)), // At least 1 admin
-      [UserRole.EDITOR]: Math.floor(count * 0.20),
+      [UserRole.EDITOR]: Math.floor(count * 0.2),
       [UserRole.VIEWER]: Math.floor(count * 0.75),
     };
 
@@ -78,19 +83,43 @@ export class DatabaseSeeder {
     let userIndex = 0;
 
     // Sample data for realistic generation
-    const firstNames = ['John', 'Jane', 'Michael', 'Sarah', 'David', 'Emily', 'Robert', 'Lisa', 'James', 'Maria'];
-    const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
+    const firstNames = [
+      'John',
+      'Jane',
+      'Michael',
+      'Sarah',
+      'David',
+      'Emily',
+      'Robert',
+      'Lisa',
+      'James',
+      'Maria',
+    ];
+    const lastNames = [
+      'Smith',
+      'Johnson',
+      'Williams',
+      'Brown',
+      'Jones',
+      'Garcia',
+      'Miller',
+      'Davis',
+      'Rodriguez',
+      'Martinez',
+    ];
 
     // Generate users for each role
     for (const [role, roleCount] of Object.entries(roleDistribution)) {
       console.log(`  Creating ${roleCount} ${role} users...`);
-      
+
       for (let i = 0; i < roleCount; i++) {
-        const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-        const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+        const firstName =
+          firstNames[Math.floor(Math.random() * firstNames.length)];
+        const lastName =
+          lastNames[Math.floor(Math.random() * lastNames.length)];
         const username = `${firstName.toLowerCase()}_${lastName.toLowerCase()}_${userIndex}`;
         const email = `${username}@example.com`;
-        
+
         const user = userRepository.create({
           username,
           email,
@@ -168,7 +197,7 @@ export class DatabaseSeeder {
    */
   private async generateDocuments(count: number): Promise<void> {
     if (count === 0) return;
-    
+
     console.log(`📄 Generating ${count} documents...`);
     const documentRepository = this.dataSource.getRepository(Document);
     const userRepository = this.dataSource.getRepository(User);
@@ -182,28 +211,48 @@ export class DatabaseSeeder {
 
     const documents: Document[] = [];
     const batchSize = 1000;
-    
+
     // Sample document data
     const fileTypes = [
       { ext: 'pdf', mime: 'application/pdf', sizeRange: [100, 5000] },
-      { ext: 'docx', mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', sizeRange: [50, 2000] },
-      { ext: 'xlsx', mime: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', sizeRange: [30, 1500] },
+      {
+        ext: 'docx',
+        mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        sizeRange: [50, 2000],
+      },
+      {
+        ext: 'xlsx',
+        mime: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        sizeRange: [30, 1500],
+      },
       { ext: 'txt', mime: 'text/plain', sizeRange: [1, 100] },
       { ext: 'jpg', mime: 'image/jpeg', sizeRange: [500, 8000] },
       { ext: 'png', mime: 'image/png', sizeRange: [200, 5000] },
     ];
 
     const documentTitles = [
-      'Annual Report', 'Project Proposal', 'Meeting Notes', 'User Manual', 'Technical Specification',
-      'Budget Analysis', 'Marketing Plan', 'Research Data', 'Training Material', 'Policy Document'
+      'Annual Report',
+      'Project Proposal',
+      'Meeting Notes',
+      'User Manual',
+      'Technical Specification',
+      'Budget Analysis',
+      'Marketing Plan',
+      'Research Data',
+      'Training Material',
+      'Policy Document',
     ];
 
     for (let i = 0; i < count; i++) {
       const fileType = fileTypes[Math.floor(Math.random() * fileTypes.length)];
-      const title = documentTitles[Math.floor(Math.random() * documentTitles.length)];
+      const title =
+        documentTitles[Math.floor(Math.random() * documentTitles.length)];
       const user = users[Math.floor(Math.random() * users.length)];
-      const size = Math.floor(Math.random() * (fileType.sizeRange[1] - fileType.sizeRange[0])) + fileType.sizeRange[0];
-      
+      const size =
+        Math.floor(
+          Math.random() * (fileType.sizeRange[1] - fileType.sizeRange[0]),
+        ) + fileType.sizeRange[0];
+
       const document = documentRepository.create({
         title: `${title} ${i + 1}`,
         filename: `document_${i + 1}.${fileType.ext}`,
@@ -238,17 +287,19 @@ export class DatabaseSeeder {
    */
   private async generateIngestionProcesses(count: number): Promise<void> {
     if (count === 0) return;
-    
+
     console.log(`⚙️ Generating ${count} ingestion processes...`);
     const ingestionRepository = this.dataSource.getRepository(IngestionProcess);
     const userRepository = this.dataSource.getRepository(User);
 
     const users = await userRepository.find({
-      where: [{ role: UserRole.ADMIN }, { role: UserRole.EDITOR }]
+      where: [{ role: UserRole.ADMIN }, { role: UserRole.EDITOR }],
     });
 
     if (users.length === 0) {
-      console.log('⚠️ No admin/editor users found, skipping ingestion generation');
+      console.log(
+        '⚠️ No admin/editor users found, skipping ingestion generation',
+      );
       return;
     }
 
@@ -262,7 +313,10 @@ export class DatabaseSeeder {
       const status = statuses[Math.floor(Math.random() * statuses.length)];
       const user = users[Math.floor(Math.random() * users.length)];
       const totalItems = Math.floor(Math.random() * 1000) + 100;
-      const processedItems = status === IngestionStatus.COMPLETED ? totalItems : Math.floor(Math.random() * totalItems);
+      const processedItems =
+        status === IngestionStatus.COMPLETED
+          ? totalItems
+          : Math.floor(Math.random() * totalItems);
 
       const process = ingestionRepository.create({
         type,
@@ -303,16 +357,20 @@ export class DatabaseSeeder {
   async showStatistics(): Promise<void> {
     console.log('\n📊 Database Statistics:');
     console.log('========================');
-    
+
     const userCount = await this.dataSource.getRepository(User).count();
     const documentCount = await this.dataSource.getRepository(Document).count();
-    const ingestionCount = await this.dataSource.getRepository(IngestionProcess).count();
-    
+    const ingestionCount = await this.dataSource
+      .getRepository(IngestionProcess)
+      .count();
+
     console.log(`👥 Users: ${userCount}`);
     console.log(`📄 Documents: ${documentCount}`);
     console.log(`⚙️ Ingestion Processes: ${ingestionCount}`);
-    console.log(`📊 Total Records: ${userCount + documentCount + ingestionCount}`);
-    
+    console.log(
+      `📊 Total Records: ${userCount + documentCount + ingestionCount}`,
+    );
+
     // Role distribution
     const roleStats = await this.dataSource
       .getRepository(User)
@@ -321,9 +379,9 @@ export class DatabaseSeeder {
       .addSelect('COUNT(*)', 'count')
       .groupBy('user.role')
       .getRawMany();
-      
+
     console.log('\n👥 User Role Distribution:');
-    roleStats.forEach(stat => {
+    roleStats.forEach((stat) => {
       console.log(`   ${stat.role}: ${stat.count}`);
     });
   }

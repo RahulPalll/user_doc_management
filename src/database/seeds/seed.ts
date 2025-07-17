@@ -32,7 +32,7 @@ async function runSeed() {
   try {
     // Get seed type from command line argument
     const seedType = process.argv[2] || 'basic';
-    
+
     // Get configuration
     const config = SEED_CONFIGS[seedType];
     if (!config) {
@@ -52,7 +52,6 @@ async function runSeed() {
     await seeder.run(config);
 
     console.log('\n🎉 Database seeding completed successfully!');
-    
   } catch (error) {
     console.error('❌ Database seeding failed:', error);
     process.exit(1);
