@@ -20,10 +20,15 @@ describe('Application (e2e)', () => {
           envFilePath: '.env.test',
         }),
         TypeOrmModule.forRoot({
-          type: 'sqlite',
-          database: ':memory:',
+          type: 'postgres',
+          host: process.env.DB_HOST || 'localhost',
+          port: parseInt(process.env.DB_PORT || '5432'),
+          username: process.env.DB_USERNAME || 'postgres',
+          password: process.env.DB_PASSWORD || 'password',
+          database: process.env.DB_NAME || 'test_db',
           entities: ['src/**/*.entity{.ts,.js}'],
           synchronize: true,
+          dropSchema: true, // Clean database for each test run
         }),
         AppModule,
       ],
