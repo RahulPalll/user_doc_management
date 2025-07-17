@@ -25,7 +25,7 @@ const SEED_CONFIGS = {
   // or running seeds in batches during off-peak hours
 };
 
-async function runSeed() {
+export async function runSeed() {
   const app = await NestFactory.createApplicationContext(AppModule);
   const dataSource = app.get(DataSource);
 

@@ -66,4 +66,25 @@ describe('GetUser Decorator Logic', () => {
     const result = getUserLogic('nonexistent', mockExecutionContext);
     expect(result).toBeUndefined();
   });
+
+  it('should handle null user gracefully', () => {
+    mockRequest.user = null;
+    const result = getUserLogic('email', mockExecutionContext);
+    expect(result).toBeUndefined();
+  });
+
+  it('should handle nested property access', () => {
+    const userWithProfile = {
+      ...mockUser,
+      profile: { firstName: 'John', lastName: 'Doe' }
+    };
+    mockRequest.user = userWithProfile;
+    const result = getUserLogic('profile', mockExecutionContext);
+    expect(result).toEqual({ firstName: 'John', lastName: 'Doe' });
+  });
+
+  it('should return full user object for empty string data parameter', () => {
+    const result = getUserLogic('', mockExecutionContext);
+    expect(result).toEqual(mockUser);
+  });
 });
